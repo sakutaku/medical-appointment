@@ -12,6 +12,8 @@ interface SessionState {
   program: string;
   concentratorSize: number;
   injection: null | string;
+  modalInfo: string;
+  showModal: boolean;
 }
 
 export const useSessionStore = defineStore({
@@ -22,6 +24,8 @@ export const useSessionStore = defineStore({
     program: '',
     concentratorSize: 0,
     injection: null,
+    modalInfo: '',
+    showModal: false,
   }),
   actions: {
     addProgram(program: string) {
@@ -32,6 +36,10 @@ export const useSessionStore = defineStore({
     },
     addInjection(injection: string) {
       this.injection = injection
+    },
+    setShowModal(value: boolean, info: string) {
+      this.showModal = value;
+      this.modalInfo = info;
     },
     async fetchNeedles() {
       this.needlesLoading = true;
