@@ -194,6 +194,10 @@ body{
   outline: none;
   border: 1px solid rgba(100, 149, 237, 0.5);
 }
+#symbol:not(:focus),
+#type:not(:focus){
+  color: transparent;
+}
 .modal-input:focus ~ .modal-label{
   visibility: hidden;
   opacity: 0;
@@ -224,7 +228,7 @@ body{
 }
 .modal-input-search:hover,
 .modal-add-btn:hover{
-  background-color: rgba(100, 149, 237, 0.5);;
+  background-color: rgba(100, 149, 237, 0.5);
 }
 .modal-add-txt{
   border: 1px solid #444;
@@ -233,6 +237,47 @@ body{
   margin-right: 3px;
   color: #000;
   font-size: 15px;
+}
+.modal-list{
+  list-style: none;
+  padding-left: 0;
+}
+.modal-list li {
+  display: flex;
+  border-top: 1px solid #ccc;
+  border-collapse: collapse;
+  padding: 10px 5px;
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+.modal-list li:last-child {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.modal-list-btns{
+  margin-left: auto;
+  display: flex;
+}
+.modal-list-delete{
+  display: block;
+  padding: 10px 5px;
+  width: 10px;
+  margin-right: 18px;
+  background-image: url("images/trash.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+}
+.modal-list-add{
+  display: block;
+  padding: 10px 5px;
+  width: 8px;
+  background-image: url("images/next.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
 }
 .injection-info{
   margin-top: 50px;

@@ -6,7 +6,7 @@ const store = useSessionStore()
 const showModal = computed(() => store.showModal)
 
 const closeModal = (value: boolean) => {
-  useSessionStore().setShowModal(value)
+  useSessionStore().setShowModal(value, '')
 }
 </script>
 <template>
