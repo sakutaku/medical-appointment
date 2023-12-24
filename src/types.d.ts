@@ -1,11 +1,13 @@
 export interface Needles {
-    id: string;
-    type: string;
-    size: number;
+    type: string[];
+    size: string[];
 }
 
 export interface Catheter {
+    type: string[];
+    size: string[];
+}
+
+export interface NeedlesSize {
     id: string;
-    type: string;
-    size: number;
 }

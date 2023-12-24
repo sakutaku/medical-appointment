@@ -2,66 +2,77 @@
 import {useSessionStore} from '../stores/session'
 import {computed, ref, onMounted, watch} from 'vue'
 import Modal from "@/components/Modal.vue"
-import type {Catheter, Needles} from "@/types"
 
 
-const {addInjection, setShowModal} = useSessionStore()
+const {addInjection, setShowModal, setInjectionType, setInjectionSize} = useSessionStore()
 const store = useSessionStore()
 const log = console.log
 log(`store =`, store)
 
 const searchTerm = ref<string>('')
-const searchResults = ref<Needles[]>([])
+const searchResults = ref<string[]>([])
 
-let needlesArr: Needles[] = []
-let catheterArr: Catheter[] = []
+let needlesArrSize: string[] = []
+let catheterArrSize: string[] = []
+let needlesArrType: string[] = []
+let catheterArrType: string[] = []
 
 onMounted(async () => {
-  await store.fetchNeedles()
-  await store.fetchCatheter()
-  needlesArr = store.needles
-  catheterArr = store.catheter
+  await store.fetchNeedlesSize()
+  await store.fetchNeedlesType()
+  await store.fetchCatheterSize()
+  await store.fetchCatheterType()
+  needlesArrSize = store.needlesSize.toString().split(',')
+  needlesArrType = store.needlesType
+  catheterArrSize = store.catheterSize.toString().split(',')
+  catheterArrType = store.catheterType
 });
 
 const updateSearchResults = () => {
   if (store.showModal === false) {
     searchResults.value = [];
   }
-};
+}
+
+const selectedItem = ref<number | null>(null)
+const selectedSize = ref<number | null>(null)
+const selectedType = ref<string>('')
 
 watch(() => store.showModal, () => {
   updateSearchResults();
 });
 const searchByType = () => {
-  const term = searchTerm.value.trim().toLowerCase()
+  const term = searchTerm.value.toLowerCase()
   if (term === '') {
     searchResults.value = [];
   } else {
     store.injection === 'Игла' ?
-        searchResults.value = needlesArr.filter((needle) =>
-            needle.type.toLowerCase().startsWith(term)
-        ) : searchResults.value = catheterArr.filter((cat) =>
-            cat.type.toLowerCase().startsWith(term)
+        searchResults.value = needlesArrType.filter((needle) =>
+            needle.toString().toLowerCase().startsWith(term)
+        ) : searchResults.value = catheterArrType.filter((cat) =>
+            cat.toString().toLowerCase().startsWith(term)
         )
   }
 
-  searchTerm.value = '';
+  searchTerm.value = ''
+  selectedItem.value = null
 };
 
 const searchBySize = () => {
-  const term = searchTerm.value.trim().toLowerCase();
-  if (term === '') {
+  const term = searchTerm.value;
+  if (!term) {
     searchResults.value = [];
   } else {
     store.injection === 'Игла' ?
-        searchResults.value = needlesArr.filter((needle) =>
-            needle.size.toString().toLowerCase().startsWith(term)
-        ) : searchResults.value = catheterArr.filter((cat) =>
-            cat.size.toString().toLowerCase().startsWith(term)
+        searchResults.value = needlesArrSize.filter((needle) =>
+            needle.startsWith(term)
+        ) : searchResults.value = catheterArrSize.filter((cat) =>
+            cat.startsWith(term)
         )
   }
 
-  searchTerm.value = '';
+  searchTerm.value = ''
+  selectedItem.value = null
 }
 
 const updateInjection = (value: string) => {
@@ -71,32 +82,38 @@ const injection = computed(() => store.injection);
 
 const showModal = async (value: boolean, info: string) => {
   setShowModal(value, info)
-  await store.fetchNeedles()
 }
 
-interface Result {
-  id: string;
-  size: number;
-}
-
-const selectedResult = ref<Result | null>(null);
 const selectedBackgroundColor = ref<string>('#6495ED7F');
 
-const selectItem = (result: Result) => {
-  selectedResult.value = result;
-};
-
-const deleteItem = (result: Result) => {
-  if (result === selectedResult.value) {
-    selectedResult.value = null;
-  }
+const addSize = (index: number, item: number) => {
+  selectedSize.value = item
+  selectedItem.value = index
 }
 
-const addItem = (result: Result) => {
-  selectItem(result);
-};
+const addType = (index: number, item: string) => {
+  selectedType.value = item
+  selectedItem.value = index
+}
 
-const info = computed(() => store.modalInfo === 'info')
+const deleteItem = (index: number) => {
+  selectedSize.value = null
+  selectedType.value = ''
+  index === selectedItem.value ? selectedItem.value = null : null
+  console.log(selectedSize)
+}
+
+const addInjectionSize = () => {
+  selectedSize.value ? setInjectionSize(selectedSize.value) : null
+  store.setShowModal(false, '')
+  console.log(selectedSize.value)
+}
+const addInjectionType = () => {
+  setInjectionType(selectedType.value)
+  console.log(selectedType.value)
+  store.setShowModal(false, '')
+}
+const info = computed(() => store.modalInfo === 'info');
 
 </script>
 <template>
@@ -143,17 +160,19 @@ const info = computed(() => store.modalInfo === 'info')
           </div>
           <div class="modal-add">
             <div class="modal-add-txt">Добавить новую запись</div>
-            <div class="modal-add-btn">+</div>
+            <div class="modal-add-btn" @click="addInjectionSize()">+</div>
           </div>
           <div class="modal-list-wrap">
             <ul class="modal-list">
-              <li v-for="result in searchResults" :key="result.id"
-                  :style="{ backgroundColor: result === selectedResult ? selectedBackgroundColor : '' }"
-                  @click="selectItem(result)">
-                <span>{{ injection }} размер {{ result.size }}</span>
+              <li
+                  v-for="(result, index) in searchResults"
+                  :key="`${injection}-size-${result}-${index}`"
+                  :style="{ backgroundColor: index === selectedItem! ? selectedBackgroundColor : '' }"
+              >
+                <span>{{ injection }} размер {{ result }}</span>
                 <span class="modal-list-btns">
-                  <span class="modal-list-delete" @click="deleteItem(result)"></span>
-                  <span class="modal-list-add" @click="addItem(result)"></span>
+                  <span class="modal-list-delete" @click="deleteItem(index)"></span>
+                  <span class="modal-list-add" @click="addSize(index, Number(result))"></span>
                 </span>
               </li>
             </ul>
@@ -170,18 +189,20 @@ const info = computed(() => store.modalInfo === 'info')
           </div>
           <div class="modal-add">
             <div class="modal-add-txt">Добавить новую запись</div>
-            <div class="modal-add-btn">+</div>
+            <div class="modal-add-btn" @click="addInjectionType()">+</div>
           </div>
           <div class="modal-list-wrap">
             <ul class="modal-list">
-              <li v-for="result in searchResults" :key="result.id"
-                  :style="{ backgroundColor: result === selectedResult ? selectedBackgroundColor : '' }"
-                  @click="selectItem(result)">
-                <span>{{ injection }} {{ result.type }}</span>
+              <li
+                  v-for="(result, index) in searchResults"
+                  :key="`${injection}-type-${result}-${index}`"
+                  :style="{ backgroundColor: index === selectedItem! ? selectedBackgroundColor : '' }"
+              >
+                <span>{{ injection }} {{ result }}</span>
                 <span class="modal-list-btns">
-                  <span class="modal-list-delete" @click="deleteItem(result)"></span>
-                  <span class="modal-list-add" @click="addItem(result)"></span>
-                  </span>
+                  <span class="modal-list-delete"  @click="deleteItem(index)"></span>
+                  <span class="modal-list-add" @click="addType(index, result)"></span>
+                </span>
               </li>
             </ul>
           </div>

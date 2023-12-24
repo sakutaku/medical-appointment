@@ -3,6 +3,8 @@ import Program from '@/components/Program.vue'
 import Dialyzer from "@/components/Dialyzer.vue";
 import Concentrator from "@/components/Concentrator.vue";
 import Injection from "@/components/Injection.vue";
+import {useSessionStore} from "@/stores/session";
+const store = useSessionStore()
 
 </script>
 
