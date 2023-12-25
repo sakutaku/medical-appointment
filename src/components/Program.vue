@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import {useSessionStore} from '../stores/session'
-import { ref } from 'vue'
 
 const {addProgram, addConcentratorSize} = useSessionStore()
-const store = useSessionStore()
-const log = console.log
-log(`store =`, store)
-const size = ref(store.concentratorSize)
-
 const updateProgram = (value: string) => {
   addProgram(value)
   if (value === 'HD') {

@@ -4,7 +4,6 @@ import { computed } from 'vue'
 
 const store = useSessionStore()
 const showModal = computed(() => store.showModal)
-const showModalBic = computed(() => store.showModalBicarbonate)
 
 const closeModal = (value: boolean) => {
   useSessionStore().setShowModal(value, '')

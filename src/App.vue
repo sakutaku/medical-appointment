@@ -3,7 +3,6 @@ import Program from '@/components/Program.vue'
 import Dialyzer from "@/components/Dialyzer.vue";
 import Concentrator from "@/components/Concentrator.vue";
 import Injection from "@/components/Injection.vue";
-import {useSessionStore} from "@/stores/session";
 import Bicarbonate from "@/components/Bicarbonate.vue";
 import Weight from "@/components/Weight.vue";
 import Anticoagulants from "@/components/Anticoagulants.vue";
@@ -17,8 +16,6 @@ import ReceptionHome from "@/components/ReceptionHome.vue";
 import Frequency from "@/components/Frequency.vue";
 import HomeTreatment from "@/components/HomeTreatment.vue";
 import Recommendations from "@/components/Recommendations.vue";
-const store = useSessionStore()
-
 </script>
 
 <template>
