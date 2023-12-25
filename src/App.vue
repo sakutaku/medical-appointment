@@ -9,6 +9,9 @@ import Weight from "@/components/Weight.vue";
 import Anticoagulants from "@/components/Anticoagulants.vue";
 import Appointment from "@/components/Appointment.vue";
 import Drug from "@/components/Drug.vue";
+import Reception from "@/components/Reception.vue";
+import Numbers from "@/components/Numbers.vue";
+import ReceptionTable from "@/components/ReceptionTable.vue";
 const store = useSessionStore()
 
 </script>
@@ -31,6 +34,9 @@ const store = useSessionStore()
       </div>
       <Appointment/>
       <Drug/>
+      <Reception/>
+      <Numbers/>
+      <ReceptionTable/>
     </div>
   </main>
 </template>

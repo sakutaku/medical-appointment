@@ -1,6 +1,16 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+interface Session {
+  chosenDrug: string;
+  chosenReceiptPath: string;
+  chosenReceiptDose: string;
+  numbers: number[];
+  startDate: string;
+  endDate: string;
+  day: number;
+}
+
 interface SessionState {
   needlesSize: number[];
   needlesType: string[];
@@ -26,9 +36,19 @@ interface SessionState {
   showModalDrug: boolean;
   drugs: string[];
   drugsLoading: boolean;
-  chosenDrug: string;
+  drugInfo: {
+    chosenDrug: string;
+    chosenReceiptPath: string;
+    chosenReceiptDose: string;
+  };
+  selectedNumbers: number[];
+  showModalReceipt: boolean;
+  modalReceiptInfo: string;
+  startDate: string | null;
+  endDate: string | null;
+  sessions: Session[];
+  numberOfDays: number | null;
 }
-
 export const useSessionStore = defineStore({
   id: 'sessions',
   state: (): SessionState => ({
@@ -56,7 +76,18 @@ export const useSessionStore = defineStore({
     showModalDrug: false,
     drugs: [],
     drugsLoading: false,
-    chosenDrug: '',
+    drugInfo: {
+      chosenDrug: '',
+      chosenReceiptPath: '',
+      chosenReceiptDose: ''
+    },
+    selectedNumbers: [],
+    showModalReceipt: false,
+    modalReceiptInfo: '',
+    startDate: null,
+    endDate: null,
+    sessions: [],
+    numberOfDays: null,
   }),
   actions: {
     addProgram(program: string) {
@@ -99,11 +130,34 @@ export const useSessionStore = defineStore({
     setShowAppointment(value: boolean) {
       this.appointment = value;
     },
+    setShowModalReceipt(value: boolean, info: string) {
+      this.showModalReceipt = value;
+      this.modalReceiptInfo = info;
+    },
+    setActiveNumbers(numbers: number[]): void {
+      this.selectedNumbers = numbers;
+    },
+    setAppointmentDates(startDate: string, endDate: string): void {
+      this.startDate = startDate;
+      this.endDate = endDate;
+    },
+    setNumberOfDays(value: number) {
+      this.numberOfDays = value;
+    },
     setInjectionSize(value: number) {
       this.chosenInjectionSize = value;
     },
     setInjectionDrug(value: string) {
-      this.chosenDrug = value;
+      this.drugInfo.chosenDrug = value;
+    },
+    setInjectionDrugPath(value: string) {
+      this.drugInfo.chosenReceiptPath = value;
+    },
+    setInjectionDrugDose(value: string) {
+      this.drugInfo.chosenReceiptDose = value;
+    },
+    addSession(session: Session): void {
+      this.sessions.push(session);
     },
     setInjectionType(value: string) {
       this.chosenInjectionType = value;

@@ -131,6 +131,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 }
 
 .modal-content {
@@ -350,6 +351,109 @@ body{
 .appointment-info div{
   margin-bottom: 20px;
 }
-.drug{
+.drug,
+.reception,
+.numbers,
+.dates,
+.reception-btn{
   margin-top: 50px;
+}
+.reception {
+  display: flex;
+}
+.dates{
+  display: flex;
+}
+.dates div{
+  margin-right: 40px;
+}
+.reception-btn button {
+  border: 1px solid #ccc;
+  background: transparent;
+  padding: 10px;
+  cursor: pointer;
+}
+.reception-btn button:hover{
+  background: rgba(100, 149, 237, 0.5);
+  border: 1px solid rgba(100, 149, 237, 0.5);
+}
+.reception-num{
+  font-weight: bolder;
+  color: rgba(100, 149, 237, 0.8);
+}
+.custom-checkbox {
+  margin-right: 10px;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  display: inline-block;
+  z-index: 1;
+}
+
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.custom-checkbox input:checked + .checkmark {
+  background-color: rgba(100, 149, 237, 0.5);
+  border: 1px solid rgba(100, 149, 237, 0.5);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked + .checkmark:after {
+  display: block;
+}
+
+.checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+.table-delete{
+  cursor: pointer;
+  width: 23px;
+  height: 23px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("images/trash2.svg");
+  background-color: transparent;
+  border: none;
+  background-size: 100%;
 }
