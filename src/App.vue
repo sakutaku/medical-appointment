@@ -8,6 +8,7 @@ import Bicarbonate from "@/components/Bicarbonate.vue";
 import Weight from "@/components/Weight.vue";
 import Anticoagulants from "@/components/Anticoagulants.vue";
 import Appointment from "@/components/Appointment.vue";
+import Drug from "@/components/Drug.vue";
 const store = useSessionStore()
 
 </script>
@@ -29,6 +30,7 @@ const store = useSessionStore()
         <Anticoagulants/>
       </div>
       <Appointment/>
+      <Drug/>
     </div>
   </main>
 </template>

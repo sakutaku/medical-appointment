@@ -23,6 +23,10 @@ interface SessionState {
   anticoagulants: string;
   anticoagulantsVol: string;
   appointment: boolean;
+  showModalDrug: boolean;
+  drugs: string[];
+  drugsLoading: boolean;
+  chosenDrug: string;
 }
 
 export const useSessionStore = defineStore({
@@ -49,6 +53,10 @@ export const useSessionStore = defineStore({
     anticoagulants: '',
     anticoagulantsVol: '',
     appointment: false,
+    showModalDrug: false,
+    drugs: [],
+    drugsLoading: false,
+    chosenDrug: '',
   }),
   actions: {
     addProgram(program: string) {
@@ -85,11 +93,17 @@ export const useSessionStore = defineStore({
       this.showModalBicarbonate = value;
       this.modalInfo = info;
     },
+    setShowModalDrug(value: boolean) {
+      this.showModalDrug = value;
+    },
     setShowAppointment(value: boolean) {
       this.appointment = value;
     },
     setInjectionSize(value: number) {
       this.chosenInjectionSize = value;
+    },
+    setInjectionDrug(value: string) {
+      this.chosenDrug = value;
     },
     setInjectionType(value: string) {
       this.chosenInjectionType = value;
@@ -136,6 +150,17 @@ export const useSessionStore = defineStore({
         console.log('Error fetching:', error);
       } finally {
         this.catheterLoading = false;
+      }
+    },
+    async fetchDrugs() {
+      this.drugsLoading = true;
+      try {
+        const response = await axios.get('https://js-course-18-87cf5-default-rtdb.europe-west1.firebasedatabase.app/drug.json');
+        this.drugs = response.data;
+      } catch (error) {
+        console.log('Error fetching:', error);
+      } finally {
+        this.drugsLoading = false;
       }
     },
   },

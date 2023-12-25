@@ -26,7 +26,7 @@ onMounted(async () => {
   needlesArrType = store.needlesType
   catheterArrSize = store.catheterSize.toString().split(',')
   catheterArrType = store.catheterType
-});
+})
 
 const updateSearchResults = () => {
   if (store.showModal === false) {
@@ -56,7 +56,7 @@ const searchByType = () => {
 
   searchTerm.value = ''
   selectedItem.value = null
-};
+}
 
 const searchBySize = () => {
   const term = searchTerm.value;
@@ -84,7 +84,7 @@ const showModal = async (value: boolean, info: string) => {
   setShowModal(value, info)
 }
 
-const selectedBackgroundColor = ref<string>('#6495ED7F');
+const selectedBackgroundColor = ref<string>('#6495ED7F')
 
 const addSize = (index: number, item: number) => {
   selectedSize.value = item
@@ -100,21 +100,18 @@ const deleteItem = (index: number) => {
   selectedSize.value = null
   selectedType.value = ''
   index === selectedItem.value ? selectedItem.value = null : null
-  console.log(selectedSize)
 }
 
 const addInjectionSize = () => {
   selectedSize.value ? setInjectionSize(selectedSize.value) : null
   store.setShowModal(false, '')
-  console.log(selectedSize.value)
 }
 const addInjectionType = () => {
   setInjectionType(selectedType.value)
-  console.log(selectedType.value)
   store.setShowModal(false, '')
 }
-const info = computed(() => store.modalInfo === 'info');
-const type = computed(() => store.modalInfo === 'type');
+const info = computed(() => store.modalInfo === 'info')
+const type = computed(() => store.modalInfo === 'type')
 
 </script>
 <template>
