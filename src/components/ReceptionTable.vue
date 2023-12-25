@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {useSessionStore} from '../stores/session'
-import { computed, ref, watch } from 'vue'
 
 const store = useSessionStore()
 

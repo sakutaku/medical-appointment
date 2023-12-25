@@ -12,6 +12,11 @@ import Drug from "@/components/Drug.vue";
 import Reception from "@/components/Reception.vue";
 import Numbers from "@/components/Numbers.vue";
 import ReceptionTable from "@/components/ReceptionTable.vue";
+import DrugHome from "@/components/DrugHome.vue";
+import ReceptionHome from "@/components/ReceptionHome.vue";
+import Frequency from "@/components/Frequency.vue";
+import HomeTreatment from "@/components/HomeTreatment.vue";
+import Recommendations from "@/components/Recommendations.vue";
 const store = useSessionStore()
 
 </script>
@@ -37,6 +42,11 @@ const store = useSessionStore()
       <Reception/>
       <Numbers/>
       <ReceptionTable/>
+      <DrugHome/>
+      <ReceptionHome/>
+      <Frequency/>
+      <HomeTreatment/>
+      <Recommendations/>
     </div>
   </main>
 </template>

@@ -48,6 +48,21 @@ interface SessionState {
   endDate: string | null;
   sessions: Session[];
   numberOfDays: number | null;
+  showModalDrugHome: boolean;
+  showModalDrugHomeInfo: string,
+  drugInfoHome: {
+    chosenDrug: string,
+    chosenReceiptPath: string,
+    chosenReceiptDose: string,
+  },
+  showModalReceiptHome: boolean;
+  modalReceiptInfoHome: string;
+  showModalFrequency: boolean;
+  startDateFrequency: string | null;
+  endDateFrequency: string | null;
+  numberOfDaysFrequency: number | null;
+  frequency: string | null;
+  treatment: boolean;
 }
 export const useSessionStore = defineStore({
   id: 'sessions',
@@ -88,6 +103,21 @@ export const useSessionStore = defineStore({
     endDate: null,
     sessions: [],
     numberOfDays: null,
+    showModalDrugHome: false,
+    showModalDrugHomeInfo: '',
+    drugInfoHome: {
+      chosenDrug: '',
+      chosenReceiptPath: '',
+      chosenReceiptDose: ''
+    },
+    showModalReceiptHome: false,
+    modalReceiptInfoHome: '',
+    showModalFrequency: false,
+    startDateFrequency: null,
+    endDateFrequency:null,
+    numberOfDaysFrequency: null,
+    frequency: null,
+    treatment: false,
   }),
   actions: {
     addProgram(program: string) {
@@ -127,12 +157,29 @@ export const useSessionStore = defineStore({
     setShowModalDrug(value: boolean) {
       this.showModalDrug = value;
     },
+    setShowModalFrequency(value: boolean) {
+      this.showModalFrequency = value;
+    },
+    setShowModalDrugHome(value: boolean, info: string) {
+      this.showModalDrugHome = value;
+      this.showModalDrugHomeInfo = info;
+    },
     setShowAppointment(value: boolean) {
       this.appointment = value;
+    },
+    setShowTreatment(value: boolean) {
+      this.treatment = value;
+    },
+    setFrequency(value: string) {
+      this.frequency = value;
     },
     setShowModalReceipt(value: boolean, info: string) {
       this.showModalReceipt = value;
       this.modalReceiptInfo = info;
+    },
+    setShowModalReceiptHome(value: boolean, info: string) {
+      this.showModalReceiptHome = value;
+      this.modalReceiptInfoHome = info;
     },
     setActiveNumbers(numbers: number[]): void {
       this.selectedNumbers = numbers;
@@ -143,6 +190,13 @@ export const useSessionStore = defineStore({
     },
     setNumberOfDays(value: number) {
       this.numberOfDays = value;
+    },
+    setAppointmentDatesFrequency(startDate: string, endDate: string): void {
+      this.startDateFrequency = startDate;
+      this.endDateFrequency = endDate;
+    },
+    setNumberOfDaysFrequency(value: number) {
+      this.numberOfDaysFrequency = value;
     },
     setInjectionSize(value: number) {
       this.chosenInjectionSize = value;
@@ -155,6 +209,15 @@ export const useSessionStore = defineStore({
     },
     setInjectionDrugDose(value: string) {
       this.drugInfo.chosenReceiptDose = value;
+    },
+    setDrugHome(value: string) {
+      this.drugInfoHome.chosenDrug = value;
+    },
+    setDrugHomePath(value: string) {
+      this.drugInfoHome.chosenReceiptPath = value;
+    },
+    setDrugHomeDose(value: string) {
+      this.drugInfoHome.chosenReceiptDose = value;
     },
     addSession(session: Session): void {
       this.sessions.push(session);

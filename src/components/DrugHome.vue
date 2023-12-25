@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import {useSessionStore} from '../stores/session'
-import {computed, ref, watch, onMounted} from 'vue'
+import {computed, onMounted, ref, watch} from 'vue'
 
 const store = useSessionStore()
-const {setInjectionDrug} = useSessionStore()
+
+const {setDrugHome} = useSessionStore()
 
 let drugsArr: string[] = []
 const searchDrugResults = ref<string[]>([])
@@ -14,7 +15,7 @@ onMounted(async () => {
 })
 
 const updateSearchDrugResults = () => {
-  if (store.showModalDrug === false) {
+  if (store.showModalDrugHome === false) {
     searchDrugResults.value = [];
   }
 }
@@ -23,7 +24,7 @@ const searchDrug = ref<string>('')
 const selectedItemDrug = ref<number | null>(null)
 const selectedName = ref<string>('')
 
-watch(() => store.showModalDrug, () => {
+watch(() => store.showModalDrugHome, () => {
   updateSearchDrugResults();
 });
 
@@ -36,14 +37,15 @@ const searchByName = () => {
       return drug.toString().toLowerCase().startsWith(term);
     })
   }
+
   searchDrug.value = ''
   selectedItemDrug.value = null
 }
 
 const selectedBackgroundColor = ref<string>('#6495ED7F')
 const addDrug = () => {
-  selectedName.value ? setInjectionDrug(selectedName.value) : null
-  store.setShowModalDrug(false)
+  selectedName.value ? setDrugHome(selectedName.value) : null
+  store.setShowModalDrugHome(false, '')
 }
 
 const addSize = (index: number, item: string) => {
@@ -55,25 +57,25 @@ const deleteItem = (index: number) => {
   selectedName.value = ''
   index === selectedItemDrug.value ? selectedItemDrug.value = null : null
 }
-
-const showModal = async (value: boolean) => {
-  store.setShowModalDrug(value)
+const showModal = async (value: boolean, info: string) => {
+  store.setShowModalDrugHome(value, info)
 }
-const setShowModal = computed(() => store.showModalDrug)
+
+const setShowModal = computed(() => store.showModalDrugHome)
 
 const closeModal = (value: boolean) => {
-  store.setShowModalDrug(value)
+  store.setShowModalDrugHome(value, '')
 }
 
 </script>
 <template>
   <div class="drug">
-    <h2>Назначение после сеанса</h2>
+    <h2>Лечение на дому</h2>
     <div>
       <h3>Лекарственный препарат</h3>
       <div class="injection-info-ref">
         <div class="dialyzer-info">Спр. "Препараты"</div>
-        <div class="injection-info-icon" @click="showModal(true)"></div>
+        <div class="injection-info-icon" @click="showModal(true, '')"></div>
       </div>
     </div>
     <div class="modal" v-if="setShowModal">

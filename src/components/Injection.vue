@@ -116,7 +116,6 @@ const type = computed(() => store.modalInfo === 'type')
 </script>
 <template>
   <div class="gemo-appointment">
-    <h2>Назначение сеанса гемодиализа</h2>
     <div>
       <h3>Тип инъекции</h3>
       <div class="input-wrap-injection">

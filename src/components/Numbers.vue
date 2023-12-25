@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {useSessionStore} from '../stores/session'
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 const store = useSessionStore()
 
-const startDate = ref<string>('');
-const endDate = ref<string>('');
-const numberOfDays = ref<number | null>(null);
+const startDate = ref<string>('')
+const endDate = ref<string>('')
+const numberOfDays = ref<number | null>(null)
 
 const updateDateRange = () => {
   if (startDate.value && endDate.value) {
@@ -23,10 +23,10 @@ const updateDateRange = () => {
   }
 
   store.setAppointmentDates(startDate.value, endDate.value)
-};
+}
 
 watch([startDate, endDate], () => {
-  updateDateRange();
+  updateDateRange()
 });
 
 const makeAnAppointment = () => {
