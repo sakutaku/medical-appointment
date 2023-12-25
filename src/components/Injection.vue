@@ -114,6 +114,7 @@ const addInjectionType = () => {
   store.setShowModal(false, '')
 }
 const info = computed(() => store.modalInfo === 'info');
+const type = computed(() => store.modalInfo === 'type');
 
 </script>
 <template>
@@ -178,7 +179,7 @@ const info = computed(() => store.modalInfo === 'info');
             </ul>
           </div>
         </div>
-        <div v-else>
+        <div v-else-if="type">
           <h2 class="modal-title">{{ injection }}</h2>
           <div class="modal-search">
             <div class="modal-input-wrap">

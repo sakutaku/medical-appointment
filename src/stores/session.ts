@@ -13,9 +13,16 @@ interface SessionState {
   injection: null | string;
   modalInfo: string;
   showModal: boolean;
+  showModalBicarbonate: boolean;
   isDataFetched: boolean;
   chosenInjectionSize: number | null;
   chosenInjectionType: string;
+  bicarbonateType: string;
+  bicarbonate: string;
+  patientWeight: string;
+  anticoagulants: string;
+  anticoagulantsVol: string;
+  appointment: boolean;
 }
 
 export const useSessionStore = defineStore({
@@ -32,9 +39,16 @@ export const useSessionStore = defineStore({
     injection: null,
     modalInfo: '',
     showModal: false,
+    showModalBicarbonate: false,
     isDataFetched: false,
     chosenInjectionSize: null,
     chosenInjectionType: '',
+    bicarbonateType: 'Жидкий',
+    bicarbonate: '',
+    patientWeight: '',
+    anticoagulants: '',
+    anticoagulantsVol: '',
+    appointment: false,
   }),
   actions: {
     addProgram(program: string) {
@@ -48,9 +62,31 @@ export const useSessionStore = defineStore({
       this.chosenInjectionSize = null
       this.chosenInjectionType = ''
     },
+    addBicarbonateType(bicarbonate: string) {
+      this.bicarbonateType = bicarbonate;
+    },
+    addBicarbonate(bicarbonate: string) {
+      this.bicarbonate = bicarbonate;
+    },
+    addPatientWeight(weight: string) {
+      this.patientWeight = weight;
+    },
+    addAnticoagulants(anticoagulants: string) {
+      this.anticoagulants = anticoagulants;
+    },
+    addAnticoagulantsVol(anticoagulants: string) {
+      this.anticoagulantsVol = anticoagulants;
+    },
     setShowModal(value: boolean, info: string) {
       this.showModal = value;
       this.modalInfo = info;
+    },
+    setShowModalBic(value: boolean, info: string) {
+      this.showModalBicarbonate = value;
+      this.modalInfo = info;
+    },
+    setShowAppointment(value: boolean) {
+      this.appointment = value;
     },
     setInjectionSize(value: number) {
       this.chosenInjectionSize = value;

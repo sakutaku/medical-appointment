@@ -290,3 +290,63 @@ body{
   display: flex;
   align-items: center;
 }
+.bicarbonate,
+.weight,
+.anticoagulants{
+  margin-top: 50px;
+}
+.anticoagulants{
+  display: flex;
+  justify-content: space-between;
+}
+.weight{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.input-wrap-bicarbonate{
+  margin-bottom: 20px;
+}
+
+.input-text{
+  padding: 10px 5px;
+  width: 200px;
+  margin-right: 15px;
+}
+.input-text-mini{
+  padding: 10px 5px;
+  width: 100px;
+  margin-right: 15px;
+}
+.input-text:focus ,
+.input-text-mini:focus{
+  outline: none;
+}
+.bic-wrap{
+  display: flex;
+}
+.appointment{
+  margin-top: 20px;
+}
+.appointment-btn{
+  border: 1px solid #ccc;
+  background: transparent;
+  padding: 10px;
+  cursor: pointer;
+}
+.appointment-btn:hover{
+  background: rgba(100, 149, 237, 0.5);
+  border: 1px solid rgba(100, 149, 237, 0.5);
+}
+
+.appointment-info{
+  padding: 20px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  font-weight: bolder;
+}
+.appointment-info span{
+  margin-right: 20px;
+}
+.appointment-info div{
+  margin-bottom: 20px;
+}
