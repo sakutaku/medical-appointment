@@ -518,3 +518,35 @@ textarea:focus{
   background-position: left center;
   background-image: url("images/user.svg");
 }
+
+@media (max-width: 950px) {
+  .gemo-appointment-boxes{
+    width: 400px;
+  }
+  .input-wrap{
+    width: 400px;
+  }
+  .dialyzer-wrap,
+  .concentrator-wrap{
+    width: 350px;
+  }
+  .modal-content {
+    width: 500px;
+  }
+  .modal-input-wrap,
+  .modal-add-txt{
+    width: 400px;
+  }
+  textarea {
+    width: 400px;
+  }
+  table {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 750px) {
+  table {
+    font-size: 12px;
+  }
+}
